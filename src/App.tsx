@@ -93,8 +93,8 @@ export default function App() {
             if (price && productName && source) {
               axios
                 .post(
-                  'http://localhost:3000/v1/product',
-                  // 'https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product',
+                  // 'http://localhost:3000/v1/product',
+                  'https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product',
                   {
                     price: price,
                     name: productName,
