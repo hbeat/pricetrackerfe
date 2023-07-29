@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeSeriesScale,
 } from 'chart.js';
 ChartJS.register(
   CategoryScale,
@@ -17,42 +18,81 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  TimeSeriesScale
 );
+// data_map = {"date1":value, "date2":value2, "date3":value3, ...}
+//sort time axis
+// let timeserie = [
+//   new Date("2023-07-28T18:43:26.826Z"),
+//   new Date(2023, 5, 1),
+//   new Date(2020, 6, 10),
+// ];
+// timeserie.sort((a, b) => a.getTime() - b.getTime());
+// console.log(timeserie);
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
-  },
-};
+// const product = 'Product1';
+// const xlabels = ['January', 'February', 'March', 'April', 'May', 'June'];
+// const price = [12, 19, 3, 5, 2, 3];
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+// export const data_mock = {
+//   labels: xlabels,
+//   datasets: [
+//     {
+//       label: product,
+//       data: price,
+//       borderColor: 'rgb(255, 99, 132)',
+//       backgroundColor: 'rgba(255, 99, 132, 0.2)',
+//       tension: 0.15,
+//     },
+//   ],
+// };
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [12, 19, 3, 5, 2, 3],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [12, 19, 3, 5, 2, 5],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
+// export const options = {
+//   responsive: true,
+//   plugins: {
+//     legend: {
+//       display: false
+//     },
+//     title: {
+//       display: true,
+//       text: `${product} Graph Price`,
+//     },
+//   },
+// };
+export const DisplayChart = ({ value }) => {
+  const product = value[0].name;
+  const times = value.map((data, idx) => {
+    return new Date(data.date).toLocaleDateString();
+  });
+  const prices = value.map((data, idx) => {
+    return data.price;
+  });
+  const data = {
+    labels: times,
+    datasets: [
+      {
+        label: product,
+        data: prices,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        tension: 0.1,
+      },
+    ],
+  };
 
-export const DisplayChart = ({}) => {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: `${product} Graph Price`,
+      },
+    },
+  };
+
   return <Line options={options} data={data} />;
 };
