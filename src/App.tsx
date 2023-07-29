@@ -13,7 +13,7 @@ export default function App() {
     new Date().toISOString().slice(0, 10).split('-')
   );
   const [price, setPrice] = useState(0.0);
-  const [source, setSource] = useState(null);
+  const [source, setSource] = useState('');
 
   const [products, setProducts] = useState({});
 
