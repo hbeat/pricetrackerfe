@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { DisplayChart } from './component/DisplayChart';
+import { DisplayTable } from './component/DisplayTable';
 import './style.css';
 
 export default function App() {
@@ -86,22 +87,6 @@ export default function App() {
   return (
     <div>
       <div>
-        <div>
-          <input
-            placeholder="Product"
-            onChange={(e) => {
-              console.log('search text field = ', e.target.value.toLowerCase());
-              setQueryProduct(e.target.value.toLowerCase());
-            }}
-          />
-          <button>Search</button>
-        </div>
-        <div>Chart Display</div>
-        {focusProduct && focusProductData && (
-          <DisplayChart value={focusProductData} />
-        )}
-      </div>
-      <div>
         <input
           type="text"
           placeholder="Product"
@@ -152,7 +137,26 @@ export default function App() {
       <p>
         {queryProduct}/{productName}/{date}/{source}/{price}
       </p>
-      {JSON.stringify(products)}
+      <div>
+        <div>
+          <input
+            placeholder="Product"
+            onChange={(e) => {
+              console.log('search text field = ', e.target.value.toLowerCase());
+              setQueryProduct(e.target.value.toLowerCase());
+            }}
+          />
+          <button>Search</button>
+        </div>
+        <div>Chart Display</div>
+        {focusProduct && focusProductData && (
+          <DisplayChart value={focusProductData} />
+        )}
+      </div>
+      <div>
+        <DisplayTable data={products.data}/>
+      </div>
+      {/* {JSON.stringify(products)} */}
     </div>
   );
 }
