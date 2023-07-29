@@ -27,14 +27,8 @@ export default function App() {
       .catch((err) => console.error(err));
   };
 
-  useEffect(() => {
-    axios
-      .get('https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product')
-      .then((res) => {
-        console.log(res);
-        setProducts(res.data);
-      })
-      .catch((err) => console.error(err));
+  useEffect(async () => {
+    await fetchProudct();
   }, []);
 
   return (
