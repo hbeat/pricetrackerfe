@@ -13,9 +13,12 @@ export default function App() {
     new Date().toISOString().slice(0, 10).split('-')
   );
   const [price, setPrice] = useState(0.0);
-  const [source, setSource] = useState(null);
+  const [source, setSource] = useState('');
 
   const [products, setProducts] = useState({});
+  useEffect(() => {
+    fetchProudct();
+  }, []);
 
   const fetchProudct = async () => {
     axios
@@ -26,16 +29,6 @@ export default function App() {
       })
       .catch((err) => console.error(err));
   };
-
-  useEffect(() => {
-    axios
-      .get('https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product')
-      .then((res) => {
-        console.log(res);
-        setProducts(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
 
   return (
     <div>
