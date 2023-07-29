@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { DisplayChart } from './component/DisplayChart';
 import './style.css';
 
 export default function App() {
@@ -21,13 +22,45 @@ export default function App() {
   }, []);
 
   const fetchProudct = async () => {
-    axios
+    await axios
       .get('https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product')
       .then((res) => {
         console.log(res);
         setProducts(res.data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        alert('Can not get data from database');
+      });
+  };
+
+  const insertProduct = async () => {
+    if (price && productName && source) {
+      await axios
+        .post(
+          // 'http://localhost:3000/v1/product',
+          'https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product',
+          {
+            price: price,
+            name: productName,
+            source: source,
+            date: date,
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          fetchProudct();
+          alert('success fully added');
+        })
+        .catch((err) => {
+          console.error(err);
+          alert('Can not send to database');
+        });
+    } else {
+      alert(
+        'Fail to Track, something wrong with the entered data e.g. leave some field blank'
+      );
+    }
   };
 
   return (
@@ -44,6 +77,7 @@ export default function App() {
           <button>Search</button>
         </div>
         <div>Chart Display</div>
+        <DisplayChart/>
       </div>
       <div>
         <input
@@ -83,29 +117,7 @@ export default function App() {
         />
         <button
           onClick={() => {
-            if (price && productName && source) {
-              axios
-                .post(
-                  // 'http://localhost:3000/v1/product',
-                  'https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product',
-                  {
-                    price: price,
-                    name: productName,
-                    source: source,
-                    date: date,
-                  }
-                )
-                .then((res) => {
-                  console.log(res);
-                  fetchProudct();
-                  alert('success fully added');
-                })
-                .catch((err) => console.error(err));
-            } else {
-              alert(
-                'Fail to Track, something wrong with the entered data e.g. leave some field blank'
-              );
-            }
+            insertProduct();
           }}
         >
           Track
