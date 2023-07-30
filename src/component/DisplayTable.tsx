@@ -49,7 +49,6 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
   }, []);
 
   return (
-    <div>
       <DataGrid
         apiRef={apiRef}
         rows={fetchedData}
@@ -71,8 +70,6 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
         }}
         rowSelectionModel={rowSelectionModel}
       />
-      {/* {JSON.stringify(fetchedData)} */}
-      {rowSelectionModel}
-    </div>
+
   );
 };
