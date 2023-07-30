@@ -180,7 +180,7 @@ export default function App() {
           )}
         </div>
       </div>
-      <div className={'Table'}>
+      <div className={'Table'} style={{display: 'flex', justifyContent: 'center'}}>
         <DisplayTable
           data={products.data}
           filterFocusProduct={filterFocusProduct}
