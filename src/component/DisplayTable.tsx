@@ -49,7 +49,7 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
   }, []);
 
   return (
-    <div style={{ width: 'auto' }}>
+    <div style={{ width: 'auto', height: 'auto' }}>
       <DataGrid
         apiRef={apiRef}
         rows={fetchedData}
