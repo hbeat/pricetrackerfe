@@ -63,7 +63,7 @@ ChartJS.register(
 export const DisplayChart = ({ value }) => {
   const product = value[0].name;
   const times = value.map((data, idx) => {
-    return new Date(data.date).toLocaleDateString();
+    return new Date(data.date).toLocaleString();
   });
   const prices = value.map((data, idx) => {
     return data.price;

@@ -14,20 +14,22 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
   // console.log('data in display table', data);
   const columns: GridColDef[] = [
     // { field: 'id', headerName: 'ID', type: 'number', width: 70 },
-    { field: 'name', headerName: 'Product', type: 'string', width: 100 },
+    { field: 'name', headerName: 'Product', type: 'string', width: 100, flex: 1},
     {
       field: 'date',
       headerName: 'Date',
       type: 'dateTime',
-      width: 200,
+      width: 200, 
+      flex: 1,
       valueGetter: (params: GridValueGetterParams) => new Date(params.row.date),
     },
-    { field: 'source', headerName: 'Source', type: 'string', width: 100 },
+    { field: 'source', headerName: 'Source', type: 'string', width: 100, flex: 1 },
     {
       field: 'price',
       headerName: 'Price',
       type: 'number',
-      width: 150,
+      width: 100,
+      flex: 1
     },
   ];
   const [fetchedData, setData] = useState([]);
@@ -49,17 +51,17 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
   }, []);
 
   return (
-    <div style={{ width: 'auto', height: 'auto' }}>
+    <div style={{ height: '150', width: '100%' }}>
       <DataGrid
         apiRef={apiRef}
         rows={fetchedData}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[10, 15, 20]}
         // checkboxSelection
         onRowSelectionModelChange={(newRowSelectionModel) => {
           setRowSelectionModel(newRowSelectionModel);
@@ -67,7 +69,9 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
           //   'selected!!!',
           //   apiRef.current.getRow(newRowSelectionModel[0])
           // );
-          filterFocusProduct(apiRef.current.getRow(newRowSelectionModel[0]).name);
+          filterFocusProduct(
+            apiRef.current.getRow(newRowSelectionModel[0]).name
+          );
         }}
         rowSelectionModel={rowSelectionModel}
       />

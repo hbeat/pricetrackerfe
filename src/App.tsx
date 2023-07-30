@@ -33,7 +33,7 @@ export default function App() {
     setSource('');
     setDate(new Date().toISOString().slice(0, 10).split('-'));
   };
-  
+
   const filterFocusProduct = (product) => {
     setfocusProduct(product);
     if (products.data) {
@@ -58,7 +58,7 @@ export default function App() {
   };
 
   const insertProduct = async () => {
-    if (price && productName && source) {
+    if (price && productName && source && date) {
       await axios
         .post(
           // 'http://localhost:3000/v1/product',
@@ -91,53 +91,73 @@ export default function App() {
 
   return (
     <div>
-      <div>
-        <input
-          type="text"
-          placeholder="Product"
-          value={productName}
-          onChange={(e) => {
-            console.log('input text field = ', e.target.value.toLowerCase());
-            setProductName(e.target.value.toLowerCase());
-          }}
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          pattern="[0-9.]+"
-          onChange={(e) => {
-            console.log('price input text field = ', e.target.value);
-            setPrice(parseFloat(e.target.value));
-          }}
-        />
-        <input
-          type="text"
-          placeholder="Source"
-          value={source}
-          onChange={(e) => {
-            console.log(
-              'source input text field = ',
-              e.target.value.toLowerCase()
-            );
-            setSource(e.target.value.toLowerCase());
-          }}
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => {
-            console.log(e.target.value.split('-'));
-            setDate(e.target.value.split('-'));
-          }}
-        />
-        <button
-          onClick={() => {
-            insertProduct();
-          }}
-        >
-          Track
-        </button>
+      <div
+        style={{
+          textAlign: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <div>
+          <label>Name of the product</label> <br />
+          <input
+            type="text"
+            placeholder="Product"
+            value={productName}
+            onChange={(e) => {
+              console.log('input text field = ', e.target.value.toLowerCase());
+              setProductName(e.target.value.toLowerCase());
+            }}
+          />
+          <br />
+          <label>Product price</label>
+          <br />
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            pattern="[0-9.]+"
+            onChange={(e) => {
+              console.log('price input text field = ', e.target.value);
+              setPrice(parseFloat(e.target.value));
+            }}
+          />
+          <br />
+          <label>Gather from</label>
+          <br />
+          <input
+            type="text"
+            placeholder="Source"
+            value={source}
+            onChange={(e) => {
+              console.log(
+                'source input text field = ',
+                e.target.value.toLowerCase()
+              );
+              setSource(e.target.value.toLowerCase());
+            }}
+          />
+          <br />
+          <label>Listed date</label>
+          <br />
+          <input
+            type="date"
+            // value={date}
+            onChange={(e) => {
+              console.log('date', e.target.value.split('-'));
+              setDate(e.target.value.split('-'));
+            }}
+          />
+          <br />
+          <br />
+          <button
+            onClick={() => {
+              insertProduct();
+            }}
+          >
+            Track
+          </button>
+        </div>
       </div>
       {/* <p>
         {queryProduct}/{productName}/{date}/{source}/{price}
@@ -153,14 +173,17 @@ export default function App() {
           />
           <button>Search</button>
         </div> */}
-        <div className={"Chart"}>
-        {focusProduct && focusProductData && (
-          <DisplayChart value={focusProductData} />
-        )}
+        <div className={'Chart'}>
+          {focusProduct && focusProductData && (
+            <DisplayChart value={focusProductData} />
+          )}
         </div>
       </div>
-      <div className={"Table"}>
-        <DisplayTable data={products.data} filterFocusProduct={filterFocusProduct} />
+      <div className={'Table'}>
+        <DisplayTable
+          data={products.data}
+          filterFocusProduct={filterFocusProduct}
+        />
       </div>
       {/* {JSON.stringify(products)} */}
     </div>
