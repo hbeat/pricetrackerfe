@@ -56,10 +56,10 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[10, 15, 20]}
         // checkboxSelection
         onRowSelectionModelChange={(newRowSelectionModel) => {
           setRowSelectionModel(newRowSelectionModel);
