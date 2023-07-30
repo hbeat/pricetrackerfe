@@ -1,9 +1,17 @@
 import * as React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-export const DisplayTable = ({ data }) => {
-  console.log('data in display table', data);
+import {
+  DataGrid,
+  GridColDef,
+  GridValueGetterParams,
+  GridRowSelectionModel,
+  useGridApiRef,
+} from '@mui/x-data-grid';
+import { getRowEl } from '@mui/x-data-grid/utils/domUtils';
+import { getRowIdFromRowModel } from '@mui/x-data-grid/internals';
+export const DisplayTable = ({ data, filterFocusProduct }) => {
+  // console.log('data in display table', data);
   const columns: GridColDef[] = [
     // { field: 'id', headerName: 'ID', type: 'number', width: 70 },
     { field: 'name', headerName: 'Product', type: 'string', width: 100 },
@@ -22,21 +30,16 @@ export const DisplayTable = ({ data }) => {
       width: 150,
     },
   ];
-
-  const rows = [
-    { id: 1, name: 'ss1', date: '', source: 'lazada', price: 35.0 },
-    { id: 2, name: 'ss1', date: '', source: 'lazada', price: 35.0 },
-    { id: 3, name: 'ss1', date: '', source: 'lazada', price: 35.0 },
-    { id: 4, name: 'ss1', date: '', source: 'lazada', price: 35.0 },
-  ];
-  console.log(rows, data);
   const [fetchedData, setData] = useState([]);
+  const [rowSelectionModel, setRowSelectionModel] =
+    useState<GridRowSelectionModel>([]);
+  const apiRef = useGridApiRef();
 
   useEffect(() => {
     axios
       .get('https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product')
       .then((res) => {
-        console.log('Fetch', res);
+        // console.log('Fetch', res);
         setData(res.data.data);
       })
       .catch((err) => {
@@ -47,8 +50,8 @@ export const DisplayTable = ({ data }) => {
 
   return (
     <div style={{ width: 'auto' }}>
-      Tableeee
       <DataGrid
+        apiRef={apiRef}
         rows={fetchedData}
         columns={columns}
         initialState={{
@@ -57,8 +60,19 @@ export const DisplayTable = ({ data }) => {
           },
         }}
         pageSizeOptions={[5, 10]}
+        // checkboxSelection
+        onRowSelectionModelChange={(newRowSelectionModel) => {
+          setRowSelectionModel(newRowSelectionModel);
+          // console.log(
+          //   'selected!!!',
+          //   apiRef.current.getRow(newRowSelectionModel[0])
+          // );
+          filterFocusProduct(apiRef.current.getRow(newRowSelectionModel[0]).name);
+        }}
+        rowSelectionModel={rowSelectionModel}
       />
       {/* {JSON.stringify(fetchedData)} */}
+      {rowSelectionModel}
     </div>
   );
 };

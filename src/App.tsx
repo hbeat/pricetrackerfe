@@ -33,6 +33,17 @@ export default function App() {
     setSource('');
     setDate(new Date().toISOString().slice(0, 10).split('-'));
   };
+  
+  const filterFocusProduct = (product) => {
+    setfocusProduct(product);
+    if (products.data) {
+      let productData = products.data.filter(function (el) {
+        return el.name == product;
+      });
+      setfocusProductData(productData);
+    }
+  };
+
   const fetchProudct = async () => {
     await axios
       .get('https://pricetracker-2ed88b8b3e1f.herokuapp.com/v1/product')
@@ -64,13 +75,7 @@ export default function App() {
           fetchProudct();
           resetTrackInput();
 
-          setfocusProduct(res.data.data.name);
-          if (products.data) {
-            let productData = products.data.filter(function (el) {
-              return el.name == res.data.data.name;
-            });
-            setfocusProductData(productData);
-          }
+          filterFocusProduct(res.data.data.name);
           alert('success fully added');
         })
         .catch((err) => {
@@ -134,11 +139,11 @@ export default function App() {
           Track
         </button>
       </div>
-      <p>
+      {/* <p>
         {queryProduct}/{productName}/{date}/{source}/{price}
-      </p>
+      </p> */}
       <div>
-        <div>
+        {/* <div className={"search"}>
           <input
             placeholder="Product"
             onChange={(e) => {
@@ -147,14 +152,15 @@ export default function App() {
             }}
           />
           <button>Search</button>
-        </div>
-        <div>Chart Display</div>
+        </div> */}
+        <div className={"Chart"}>
         {focusProduct && focusProductData && (
           <DisplayChart value={focusProductData} />
         )}
+        </div>
       </div>
-      <div>
-        <DisplayTable data={products.data}/>
+      <div className={"Table"}>
+        <DisplayTable data={products.data} filterFocusProduct={filterFocusProduct} />
       </div>
       {/* {JSON.stringify(products)} */}
     </div>
