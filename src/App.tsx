@@ -91,6 +91,7 @@ export default function App() {
 
   return (
     <div>
+      <h1 style={{textAlign:'center'}}>Price Tracker by HB</h1>
       <div>
         <input
           type="text"

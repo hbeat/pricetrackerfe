@@ -14,7 +14,7 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
   // console.log('data in display table', data);
   const columns: GridColDef[] = [
     // { field: 'id', headerName: 'ID', type: 'number', width: 70 },
-    { field: 'name', headerName: 'Product', type: 'string', width: 100 },
+    { field: 'name', headerName: 'Product', type: 'string', width: 150 },
     {
       field: 'date',
       headerName: 'Date',
@@ -22,7 +22,7 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
       width: 200,
       valueGetter: (params: GridValueGetterParams) => new Date(params.row.date),
     },
-    { field: 'source', headerName: 'Source', type: 'string', width: 100 },
+    { field: 'source', headerName: 'Source', type: 'string', width: 150 },
     {
       field: 'price',
       headerName: 'Price',
@@ -49,7 +49,7 @@ export const DisplayTable = ({ data, filterFocusProduct }) => {
   }, []);
 
   return (
-    <div style={{ width: 'auto', height: 'auto' }}>
+    <div>
       <DataGrid
         apiRef={apiRef}
         rows={fetchedData}
